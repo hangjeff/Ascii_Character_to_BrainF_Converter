@@ -69,7 +69,7 @@ begin
   output := process(Memo1.Text);
   if output <> '' then
   begin
-    Clipboard.AsText := '```brainfuck' + sLineBreak + process(Memo1.Text) + '```';
+    Clipboard.AsText := '```brainfuck' + sLineBreak + process(Memo1.Text) + sLineBreak + '```';
     ShowMessage('The result has been copied to clipboard successfully!');
   end;
 end;
