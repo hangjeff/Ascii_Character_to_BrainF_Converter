@@ -24,13 +24,11 @@ var
 
 implementation
 
-procedure process(str: String);
+function process(str: String): String;
 var
   i, prev: Integer;
-  flag:  boolean;
   output: String;
 begin
-  flag := true;
   output := '';
   prev := 0;
   for i := 1 to Length(str) do
@@ -44,27 +42,35 @@ begin
     begin
       ShowMessage(Format(
       'Error! The character in position %d is Not an Ascii Character!', [i]));
-      flag := false;
-      break;
+      Exit('');
     end;
   end;
 
-  if flag then
+    process := output;
+end;
+
+{$R *.dfm}
+procedure TBFForm.btnCopyClick(Sender: TObject);
+var
+output: String;
+begin
+	output := process(Memo1.Text);
+  if output <> '' then
   begin
     Clipboard.AsText := output;
     ShowMessage('The result has been copied to clipboard successfully!');
   end;
 end;
 
-{$R *.dfm}
-procedure TBFForm.btnCopyClick(Sender: TObject);
-begin
-	process(Memo1.Text);
-end;
-
 procedure TBFForm.btnMdClick(Sender: TObject);
-
+var
+  output: String;
 begin
-	process(Memo1.Text);
+  output := process(Memo1.Text);
+  if output <> '' then
+  begin
+    Clipboard.AsText := '```brainfuck' + sLineBreak + process(Memo1.Text) + '```';
+    ShowMessage('The result has been copied to clipboard successfully!');
+  end;
 end;
 end.
