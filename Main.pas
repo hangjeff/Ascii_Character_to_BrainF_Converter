@@ -24,8 +24,7 @@ var
 
 implementation
 
-{$R *.dfm}
-procedure TBFForm.btnCopyClick(Sender: TObject);
+procedure process(str: String);
 var
   i, prev: Integer;
   flag:  boolean;
@@ -34,12 +33,12 @@ begin
   flag := true;
   output := '';
   prev := 0;
-  for i := 1 to Length(Memo1.Text) do
+  for i := 1 to Length(str) do
   begin
-    if (Ord(Memo1.Text[i]) > -1) and (Ord(Memo1.Text[i]) < 256) then
+    if (Ord(str[i]) > -1) and (Ord(str[i]) < 256) then
     begin
-      output := output + BF_Process(Ord(Memo1.Text[i]) - prev);
-      prev := Ord(Memo1.Text[i]);
+      output := output + BF_Process(Ord(str[i]) - prev);
+      prev := Ord(str[i]);
     end
     else
     begin
@@ -57,35 +56,15 @@ begin
   end;
 end;
 
-procedure TBFForm.btnMdClick(Sender: TObject);
-var
-  i, prev: Integer;
-  flag: boolean;
-  output: String;
+{$R *.dfm}
+procedure TBFForm.btnCopyClick(Sender: TObject);
 begin
-  flag := true;
-  output := '```brainfuck' + sLineBreak;
-  prev := 0;
-  for i := 1 to Length(Memo1.Text) do
-  begin
-    if (Ord(Memo1.Text[i]) > -1) and (Ord(Memo1.Text[i]) < 256) then
-    begin
-      output := output + BF_Process(Ord(Memo1.Text[i]) - prev);
-      prev := Ord(Memo1.Text[i]);
-    end
-    else
-    begin
-      ShowMessage(Format(
-      'Error! The character in position %d is Not an Ascii Character!', [i]));
-      flag := false;
-      break;
-    end;
-  end;
+	process(Memo1.Text);
+end;
 
-  if flag then
-  begin
-      Clipboard.AsText := output + sLineBreak + '```';
-      ShowMessage('The result has been copied to clipboard successfully!');
-  end;
+procedure TBFForm.btnMdClick(Sender: TObject);
+
+begin
+	process(Memo1.Text);
 end;
 end.
