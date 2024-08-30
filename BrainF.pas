@@ -14,7 +14,7 @@ var
 begin
 	{
 		The program uses only two memory spaces:
-		the first one to store the the value,
+		the first one to store the value,
 		and the second one to store number of iterations
 
     the variable 'rst' means 'result'
